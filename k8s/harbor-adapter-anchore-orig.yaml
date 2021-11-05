@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: harbor-scanner-anchore
-  namespace: harbor
   labels:
     app: harbor-scanner-anchore
 spec:
@@ -48,26 +47,25 @@ spec:
 #              value: "apikey123"
 
 # Uncomment below to enable https in api
-            - name: SCANNER_ADAPTER_TLS_KEY_FILE
-              value: "/certs/tls.key"
-            - name: SCANNER_ADAPTER_TLS_CERT_FILE
-              value: "/certs/tls.crt"
+#            - name: SCANNER_ADAPTER_TLS_KEY_FILE
+#              value: "/certs/tls.key"
+#            - name: SCANNER_ADAPTER_TLS_CERT_FILE
+#              value: "/certs/tls.crt"
 
-          volumeMounts:
-            - name: certs
-              mountPath: /certs
-          ports:
-            - containerPort: 8080
-      volumes:
-        - name: certs
-          secret:
-            secretName: adapter-certs
+#          volumeMounts:
+#            - name: certs
+#              mountPath: /certs
+#          ports:
+#            - containerPort: 8080
+#      volumes:
+#        - name: certs
+#          secret:
+#            secretName: adapter-certs
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: harbor-scanner-anchore
-  namespace: harbor
 spec:
   selector:
     app: harbor-scanner-anchore
